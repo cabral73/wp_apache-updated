@@ -7,8 +7,9 @@ ENV APACHE_DOCUMENT_ROOT=/home/site/wwwroot
 RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-available/*.conf \
     && sed -ri -e "s!/var/www/!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Ajusta permissões para o usuário do Apache
-RUN chown -R www-data:www-data /home/site/wwwroot
+# Cria o diretório wwwroot
+RUN mkdir -p /home/site/wwwroot \
+    && chown -R www-data:www-data /home/site/wwwroot
 
 EXPOSE 80
 
