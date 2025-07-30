@@ -1,10 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-# Se não houver WordPress no wwwroot, copia da fonte oficial
+# Se o diretório estiver vazio, copia os arquivos do WordPress
 if [ ! -f /home/site/wwwroot/index.php ]; then
-    cp -a /usr/src/wordpress/. /home/site/wwwroot/
-    chown -R www-data:www-data /home/site/wwwroot
+  echo ">> Instalando WordPress no /home/site/wwwroot..."
+  cp -a /usr/src/wordpress/. /home/site/wwwroot/
+  chown -R www-data:www-data /home/site/wwwroot
+else
+  echo ">> WordPress já presente no /home/site/wwwroot"
 fi
 
-# Executa o entrypoint original do WordPress apontando para o Apache
-exec docker-entrypoint.sh apache2-foreground
+# Roda o apache em foreground (mantém container vivo)
+exec apache2-foreground
