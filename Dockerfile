@@ -11,8 +11,10 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
 RUN mkdir -p /home/site/wwwroot \
     && chown -R www-data:www-data /home/site/wwwroot
 
-# Define corretamente o ENTRYPOINT padrão
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# CMD com lógica de cópia e inicialização
-CMD ["sh", "-c", "if [ ! -f /home/site/wwwroot/index.php ]; then cp -a /var/www/html/. /home/site/wwwroot/ && chown -R www-data:www-data /home/site/wwwroot; fi && apache2-foreground"]
+EXPOSE 80
+
+ENTRYPOINT ["entrypoint.sh"]
+CMD ["apache2-foreground"]
