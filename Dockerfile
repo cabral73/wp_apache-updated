@@ -1,6 +1,6 @@
 FROM wordpress:latest
 
-# Define o novo DocumentRoot
+# Define novo DocumentRoot
 ENV APACHE_DOCUMENT_ROOT=/home/site/wwwroot
 
 # Ajusta os arquivos de conf para refletir o novo DocumentRoot
@@ -11,10 +11,12 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
 RUN mkdir -p /home/site/wwwroot \
     && chown -R www-data:www-data /home/site/wwwroot
 
+# Copia e dá permissão ao novo entrypoint
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 80
 
-ENTRYPOINT ["entrypoint.sh"]
+# Usa seu entrypoint personalizado
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["apache2-foreground"]

@@ -1,11 +1,10 @@
 #!/bin/sh
-echo "Entrypoint started" >> /home/site/wwwroot/entrypoint.log 2>&1
 
+# Se não houver WordPress no wwwroot, copia da fonte oficial
 if [ ! -f /home/site/wwwroot/index.php ]; then
-    echo "Copiando arquivos padrão do WordPress..." >> /home/site/wwwroot/entrypoint.log 2>&1
-    cp -a /var/www/html/. /home/site/wwwroot/
+    cp -a /usr/src/wordpress/. /home/site/wwwroot/
     chown -R www-data:www-data /home/site/wwwroot
 fi
 
-echo "Iniciando Apache..." >> /home/site/wwwroot/entrypoint.log 2>&1
+# Executa o entrypoint original do WordPress apontando para o Apache
 exec docker-entrypoint.sh apache2-foreground
