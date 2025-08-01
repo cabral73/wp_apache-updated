@@ -7,8 +7,8 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
     && sed -ri -e "s!/var/www/!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # Garante que o diretório exista
-RUN mkdir -p /home/site/wwwroot \
-    && chown -R www-data:www-data /home/site/wwwroot
+RUN mkdir -p /home/site/wwwroot 
+    #&& chown -R www-data:www-data /home/site/wwwroot
 
 # Copia o entrypoint corrigido
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
