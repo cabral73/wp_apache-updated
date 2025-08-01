@@ -1,4 +1,4 @@
-FROM wordpress:latest
+FROM wordpress:6.5.2-php8.2-apache
 
 ENV APACHE_DOCUMENT_ROOT=/home/site/wwwroot
 
@@ -8,11 +8,11 @@ RUN sed -ri -e "s!/var/www/html!${APACHE_DOCUMENT_ROOT}!g" /etc/apache2/sites-av
 
 # Garante que o diretório exista
 RUN mkdir -p /home/site/wwwroot \
-    && chown -R www-data:www-data /home/site/wwwroot
+    && chown -R www-data:www-data /home/site/wwwroot \
+    && chmod +x /usr/local/bin/entrypoint.sh
 
 # Copia o entrypoint corrigido
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
 EXPOSE 80
 
