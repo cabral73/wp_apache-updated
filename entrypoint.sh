@@ -1,5 +1,4 @@
 #!/bin/bash
-set -ex
 
 echo ">> Entrou no entrypoint"
 
@@ -14,5 +13,4 @@ fi
 
 # Roda o apache em foreground (mantém container vivo)
 echo ">> Iniciando Apache..."
-service ssh start
 exec apache2-foreground
