@@ -14,4 +14,5 @@ fi
 
 # Roda o apache em foreground (mantém container vivo)
 echo ">> Iniciando Apache..."
-exec apache2ctl -D FOREGROUND
+service ssh start
+exec apache2-foreground
