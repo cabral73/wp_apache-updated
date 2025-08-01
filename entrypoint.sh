@@ -1,4 +1,7 @@
 #!/bin/bash
+set -ex
+
+echo ">> Entrou no entrypoint"
 
 # Se o diretório estiver vazio, copia os arquivos do WordPress
 if [ ! -f /home/site/wwwroot/index.php ]; then
@@ -10,4 +13,5 @@ else
 fi
 
 # Roda o apache em foreground (mantém container vivo)
-exec apache2-foreground
+echo ">> Iniciando Apache..."
+exec apache2ctl -D FOREGROUND
